@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,6 +32,27 @@ public class FakeStoreProductService implements ProductService
         }
         return products;
     }
+    @Override
+    public  List<String> getAllCategories()
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        String[] categories = restTemplate.getForObject("https://fakestoreapi.com/products/categories", String[].class);
+        return Arrays.asList(categories);
+    }
+
+    @Override
+    public List<Product> getProductByCategory(String category)
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject("https://fakestoreapi.com/products/category/"+category, FakeStoreProductDto[].class);
+        List<Product> products = new ArrayList<>();
+        for (FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos)
+        {
+            products.add(convertFakeStoreProductToProduct(fakeStoreProductDto));
+        }
+        return products;
+    }
+
     private Product convertFakeStoreProductToProduct(FakeStoreProductDto fakeStoreProductDto)
     {
         Product product = new Product();

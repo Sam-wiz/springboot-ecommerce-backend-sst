@@ -1,7 +1,6 @@
 package io.github.samwiz.spring_backend_ecommerce.controllers;
 
 import io.github.samwiz.spring_backend_ecommerce.models.Product;
-import io.github.samwiz.spring_backend_ecommerce.services.FakeStoreProductService;
 import io.github.samwiz.spring_backend_ecommerce.services.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,5 +29,14 @@ public class ProductController
     {
         return productService.getAllProducts();
     }
+    @GetMapping("/categories")
+    public List<String> getAllCategories()
+    {
+        return productService.getAllCategories();
+    }
+    @GetMapping("/category/{category}")
+    public List<Product> getProductByCategory(@PathVariable("category") String category)
+    {
+        return productService.getProductByCategory(category);
+    }
 }
- 
