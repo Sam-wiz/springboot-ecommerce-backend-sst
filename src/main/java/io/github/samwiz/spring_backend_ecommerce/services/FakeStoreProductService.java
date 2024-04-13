@@ -1,6 +1,7 @@
 package io.github.samwiz.spring_backend_ecommerce.services;
 
 import io.github.samwiz.spring_backend_ecommerce.dtos.FakeStoreProductDto;
+import io.github.samwiz.spring_backend_ecommerce.exceptions.ProductNotFoundException;
 import io.github.samwiz.spring_backend_ecommerce.models.Category;
 import io.github.samwiz.spring_backend_ecommerce.models.Product;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ public class FakeStoreProductService implements ProductService
     {
         RestTemplate restTemplate = new RestTemplate();
         FakeStoreProductDto fakeStoreProductDto =  restTemplate.getForObject("https://fakestoreapi.com/products/"+ id, FakeStoreProductDto.class);
+        if(fakeStoreProductDto == null)
+        {
+            throw new ProductNotFoundException("Please through a valid product id");
+        }
         return convertFakeStoreProductToProduct(fakeStoreProductDto);
     }
     @Override
