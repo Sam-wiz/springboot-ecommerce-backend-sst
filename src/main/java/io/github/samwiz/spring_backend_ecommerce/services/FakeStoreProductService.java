@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Service
+@Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService
 {
     @Override
@@ -56,6 +56,11 @@ public class FakeStoreProductService implements ProductService
             products.add(convertFakeStoreProductToProduct(fakeStoreProductDto));
         }
         return products;
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return null;
     }
 
     private Product convertFakeStoreProductToProduct(FakeStoreProductDto fakeStoreProductDto)
